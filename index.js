@@ -3,9 +3,25 @@ import express from 'express'
 import { fileURLToPath } from 'url'
 import * as prismicH from '@prismicio/helpers'
 import { client } from './config/prismicConfig.js'
+import crypto from 'crypto'
 
 const app = express();
 const port = process.env.PORT || 3000
+
+//const crypto = require("crypto");
+
+// The `generateKeyPairSync` method accepts two arguments:
+// 1. The type ok keys we want, which in this case is "rsa"
+// 2. An object with the properties of the key
+const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+  // The standard secure default length for RSA keys is 2048 bits
+  modulusLength: 2048,
+});
+
+
+
+// The encrypted data is in the form of bytes, so we print it in base64 format
+// so that it's displayed in a more readable form
 
 let ciphertext;
 
@@ -94,8 +110,21 @@ app.use((req, res, next) => {
 app.get('/', async (req, res) => {
   // Here we are retrieving the first document from your API endpoint
   const document = await client.getFirst();
-  res.send(encode(document.data.title[0].text));
   console.log(document.data.title[0].text);
+  const data = document.data.title[0].text;
+
+  const encryptedData = crypto.publicEncrypt(
+    {
+      key: publicKey,
+      padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
+      oaepHash: "sha256",
+    },
+    // We convert the data string to a buffer using `Buffer.from`
+    Buffer.from(data)
+  );
+  console.log("encypted data: ", encryptedData.toString("base64"));
+  res.send(encryptedData.toString("base64"));
+
 })
 
 // Listen to application port.
