@@ -6,7 +6,10 @@ import { client } from './config/prismicConfig.js'
 import crypto from 'crypto'
 import {encrypt, decrypt} from './encrypt.cjs'
 
-const hash = encrypt('Hello World!');
+const document = await client.getFirst();
+const text = document.data.title[0].text;
+
+const hash = encrypt(text);
 
 console.log(hash);
 
@@ -26,18 +29,22 @@ app.use((req, res, next) => {
 })
 
 // Query for the root path.
-app.get('/', async (req, res) => {
+app.get('/title', async (req, res) => {
   res.send(hash);
 })
 
+app.get('/', async (req, res) => {
+  res.send("buenos dias");
+})
 
-app.get('/deciphered', async (req, res) => {
-  var crypto = require('crypto');
-  var mykey = crypto.createDecipher('aes-128-cbc', 'mypassword');
-  var mystr = mykey.update('34feb914c099df25794bf9ccb85bea72', 'hex', 'utf8')
-  mystr += mykey.final('utf8');
+app.get('/images', async (req, res) => {
+  let array = []
+  array.push(document.data.img1);
+  array.push(document.data.img2);
+  array.push(document.data.img3);
+  array.push(document.data.img4);
 
-  console.log(mystr); //abc
+  res.send(array);
 
 })
 
