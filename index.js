@@ -5,6 +5,7 @@ import * as prismicH from '@prismicio/helpers'
 import { client } from './config/prismicConfig.js'
 import crypto from 'crypto'
 import {encrypt, decrypt} from './encrypt.cjs'
+import cors from 'cors'
 
 const document = await client.getFirst();
 const text = document.data.title[0].text;
@@ -27,6 +28,14 @@ app.use((req, res, next) => {
   }
   next()
 })
+
+app.use(cors({
+  origin: ['http://localhost:3001', 'https://clemboss.site/game2guess']
+}));
+
+// Listen on a specific host via the HOST environment variable
+var host = process.env.HOST || '0.0.0.0';
+// Listen on a specific port via the PORT environment variable
 
 // Query for the root path.
 app.get('/title', async (req, res) => {
