@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 })
 
 app.use(cors({
-  origin: ['http://localhost:3001', 'https://clemboss.site/game2guess']
+  origin: ['http://localhost:3001', 'https://clemboss.site']
 }));
 
 // Listen on a specific host via the HOST environment variable
