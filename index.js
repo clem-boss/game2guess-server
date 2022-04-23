@@ -6,6 +6,10 @@ import { client } from './config/prismicConfig.js'
 import crypto from 'crypto'
 import {encrypt, decrypt} from './encrypt.cjs'
 import cors from 'cors'
+import cors_proxy from 'cors-anywhere'
+import axios from 'axios';
+
+
 
 const document = await client.getFirst();
 const text = document.data.title[0].text;
@@ -56,6 +60,70 @@ app.get('/images', async (req, res) => {
   res.send(array);
 
 })
+
+cors_proxy.createServer({
+    originWhitelist: [], // Allow all origins
+    requireHeader: ['origin', 'x-requested-with'],
+    removeHeaders: ['cookie', 'cookie2']
+}).listen(port, host, function() {
+    console.log('Running CORS Anywhere on ' + host + ':' + port);
+});
+
+const access_token = await axios.post('https://id.twitch.tv/oauth2/token?client_id=jwz94hqz4avlwtjqyn7y11fuqbfln4&client_secret=ziazxnfp8v0nqr1qqsxugrlv6eofe2&grant_type=client_credentials')
+.then(function (response) {
+  return response.data.access_token;
+})
+  .catch(function (error) {
+    console.log(error);
+  })
+
+  console.log(access_token);
+
+
+  app.get('/igdb/:igdbTitle', (req, res) => {
+    axios.post('https://id.twitch.tv/oauth2/token?client_id=jwz94hqz4avlwtjqyn7y11fuqbfln4&client_secret=ziazxnfp8v0nqr1qqsxugrlv6eofe2&grant_type=client_credentials')
+    .then(function (response) {
+      return axios({
+        url: "https://api.igdb.com/v4/games/",
+        method: 'POST',
+        headers: {
+            'Client-ID': "jwz94hqz4avlwtjqyn7y11fuqbfln4",
+            'Authorization': "Bearer "+ access_token,
+            'Content-Type': 'text/plain'
+        },
+        data: 'fields name; where name = "'+ req.params.igdbTitle + '"*;'
+      })
+        .then(response => {
+           res.send(response.data);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+  });
+})
+/* axios.post('https://id.twitch.tv/oauth2/token?client_id=jwz94hqz4avlwtjqyn7y11fuqbfln4&client_secret=ziazxnfp8v0nqr1qqsxugrlv6eofe2&grant_type=client_credentials')
+      .then(function (response) {
+        axios({
+          url: "https://api.igdb.com/v4/games",
+          method: 'POST',
+          headers: {
+              'Client-ID': "jwz94hqz4avlwtjqyn7y11fuqbfln4",
+              'Authorization': "Bearer "+response.data.access_token,
+              'Content-Type': 'text/plain'
+          },
+          data: "fields *;"
+        })
+          .then(response => {
+              console.log(response.data);
+          })
+          .catch(err => {
+              console.error(err);
+          });
+      })
+      .catch(function (error) {
+        console.log(error);
+      }) */
+
 
 // Listen to application port.
 app.listen(port, () => {
