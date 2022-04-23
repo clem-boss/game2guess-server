@@ -55,9 +55,10 @@ function getLocalIp() {
     }
 }
 }
+await getLocalIp();
 
 // Listen on a specific host via the HOST environment variable
-var host = process.env.HOST || '2001:861:388c:5260:b1ea:38f4:891b:bfa';
+var host = process.env.HOST || results['eth0'][0];
 // Listen on a specific port via the PORT environment variable
 
 // Query for the root path.
@@ -66,8 +67,7 @@ app.get('/title', async (req, res) => {
 })
 
 app.get('/', async (req, res) => {
-  await getLocalIp();
-  res.send(results["eth0"][0]);
+  res.send("holààà");
 })
 
 app.get('/images', async (req, res) => {
@@ -85,9 +85,8 @@ cors_proxy.createServer({
     originWhitelist: [], // Allow all origins
     requireHeader: ['origin', 'x-requested-with'],
     removeHeaders: ['cookie', 'cookie2']
-}).listen(port, function() {
-    await getLocalIp();
-    console.log('Running CORS Anywhere on ' + results["eth0"][0] + ':' + port);
+}).listen(port, host, function() {
+    console.log('Running CORS Anywhere on ' + host + ':' + port);
 });
 
 const access_token = await axios.post('https://id.twitch.tv/oauth2/token?client_id=jwz94hqz4avlwtjqyn7y11fuqbfln4&client_secret=ziazxnfp8v0nqr1qqsxugrlv6eofe2&grant_type=client_credentials')
