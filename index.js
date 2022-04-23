@@ -47,7 +47,7 @@ app.get('/title', async (req, res) => {
 })
 
 app.get('/', async (req, res) => {
-  res.send("buenos dias");
+  res.send("buenos dias" + host);
 })
 
 app.get('/images', async (req, res) => {
