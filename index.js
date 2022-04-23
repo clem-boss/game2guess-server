@@ -38,7 +38,7 @@ app.use(cors({
 }));
 
 // Listen on a specific host via the HOST environment variable
-var host = process.env.HOST || '0.0.0.0';
+var host = process.env.HOST || 'https://safe-forest-51192.herokuapp.com';
 // Listen on a specific port via the PORT environment variable
 
 // Query for the root path.
@@ -61,7 +61,7 @@ app.get('/images', async (req, res) => {
 
 })
 
-/* cors_proxy.createServer({
+cors_proxy.createServer({
     originWhitelist: [], // Allow all origins
     requireHeader: ['origin', 'x-requested-with'],
     removeHeaders: ['cookie', 'cookie2']
@@ -100,7 +100,7 @@ const access_token = await axios.post('https://id.twitch.tv/oauth2/token?client_
             console.error(err);
         });
   });
-}) */
+})
 /* axios.post('https://id.twitch.tv/oauth2/token?client_id=jwz94hqz4avlwtjqyn7y11fuqbfln4&client_secret=ziazxnfp8v0nqr1qqsxugrlv6eofe2&grant_type=client_credentials')
       .then(function (response) {
         axios({
