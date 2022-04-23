@@ -8,6 +8,8 @@ import {encrypt, decrypt} from './encrypt.cjs'
 import cors from 'cors'
 import cors_proxy from 'cors-anywhere'
 import axios from 'axios';
+import requestIp from 'request-ip'
+import { networkInterfaces } from 'os'
 
 
 
@@ -37,8 +39,25 @@ app.use(cors({
   origin: ['http://localhost:3001', 'https://clemboss.site']
 }));
 
+const nets = networkInterfaces();
+const results = Object.create(null); // Or just '{}', an empty object
+
+function getLocalIp() {
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name]) {
+        // Skip over non-IPv4 and internal (i.e. 127.0.0.1) addresses
+        if (net.family === 'IPv4' && !net.internal) {
+            if (!results[name]) {
+                results[name] = [];
+            }
+            results[name].push(net.address);
+        }
+    }
+}
+}
+
 // Listen on a specific host via the HOST environment variable
-var host = process.env.HOST || '54.224.34.30';
+var host = process.env.HOST || '2001:861:388c:5260:b1ea:38f4:891b:bfa';
 // Listen on a specific port via the PORT environment variable
 
 // Query for the root path.
@@ -47,7 +66,8 @@ app.get('/title', async (req, res) => {
 })
 
 app.get('/', async (req, res) => {
-  res.send("buenos dias");
+  await getLocalIp();
+  res.send(results);
 })
 
 app.get('/images', async (req, res) => {
@@ -61,7 +81,7 @@ app.get('/images', async (req, res) => {
 
 })
 
- cors_proxy.createServer({
+/* cors_proxy.createServer({
     originWhitelist: [], // Allow all origins
     requireHeader: ['origin', 'x-requested-with'],
     removeHeaders: ['cookie', 'cookie2']
@@ -78,6 +98,12 @@ const access_token = await axios.post('https://id.twitch.tv/oauth2/token?client_
   })
 
   console.log(access_token);
+
+  app.get('/', (req, res) => {
+    var clientIp = requestIp.getClientIp(request);
+    console.log(clientIp);
+  });
+
 
 
   app.get('/igdb/:igdbTitle', (req, res) => {
@@ -100,7 +126,7 @@ const access_token = await axios.post('https://id.twitch.tv/oauth2/token?client_
             console.error(err);
         });
   });
-}) 
+})  */
 /* axios.post('https://id.twitch.tv/oauth2/token?client_id=jwz94hqz4avlwtjqyn7y11fuqbfln4&client_secret=ziazxnfp8v0nqr1qqsxugrlv6eofe2&grant_type=client_credentials')
       .then(function (response) {
         axios({
