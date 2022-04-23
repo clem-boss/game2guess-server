@@ -38,7 +38,7 @@ app.use(cors({
 }));
 
 // Listen on a specific host via the HOST environment variable
-var host = process.env.HOST || '0.0.0.0';
+var host = process.env.HOST || '54.224.34.30';
 // Listen on a specific port via the PORT environment variable
 
 // Query for the root path.
@@ -47,7 +47,7 @@ app.get('/title', async (req, res) => {
 })
 
 app.get('/', async (req, res) => {
-  res.send("buenos dias" + host);
+  res.send("buenos dias");
 })
 
 app.get('/images', async (req, res) => {
