@@ -58,7 +58,7 @@ function getLocalIp() {
 await getLocalIp();
 
 // Listen on a specific host via the HOST environment variable
-var host = process.env.HOST || results['Ethernet'][0];
+var host = process.env.HOST || results;
 // Listen on a specific port via the PORT environment variable
 
 // Query for the root path.
