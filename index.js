@@ -10,6 +10,7 @@ import cors_proxy from 'cors-anywhere'
 import axios from 'axios';
 import requestIp from 'request-ip'
 import { networkInterfaces } from 'os'
+import './proxy.cjs'
 
 
 
@@ -80,14 +81,6 @@ app.get('/images', async (req, res) => {
   res.send(array);
 
 })
-/* 
-cors_proxy.createServer({
-    originWhitelist: [], // Allow all origins
-    requireHeader: ['origin', 'x-requested-with'],
-    removeHeaders: ['cookie', 'cookie2']
-}).listen(port, host, function() {
-    console.log('Running CORS Anywhere on ' + host + ':' + port);
-});
 
 const access_token = await axios.post('https://id.twitch.tv/oauth2/token?client_id=jwz94hqz4avlwtjqyn7y11fuqbfln4&client_secret=ziazxnfp8v0nqr1qqsxugrlv6eofe2&grant_type=client_credentials')
 .then(function (response) {
@@ -121,7 +114,7 @@ const access_token = await axios.post('https://id.twitch.tv/oauth2/token?client_
             console.error(err);
         });
   });
-})  */ 
+})  
 /* axios.post('https://id.twitch.tv/oauth2/token?client_id=jwz94hqz4avlwtjqyn7y11fuqbfln4&client_secret=ziazxnfp8v0nqr1qqsxugrlv6eofe2&grant_type=client_credentials')
       .then(function (response) {
         axios({

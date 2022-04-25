@@ -12,6 +12,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "coveralls": "^2.11.6",
+    "eslint": "^2.2.0",
+    "istanbul": "^0.4.2",
+    "lolex": "^1.5.0",
+    "mocha": "^3.4.2",
+    "nock": "^8.2.1",
+    "supertest": "^2.0.1",
     "@prismicio/client": "^6.4.3",
     "@prismicio/helpers": "^2.3.0",
     "axios": "^0.26.1",
