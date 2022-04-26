@@ -105,7 +105,7 @@ const access_token = await axios.post('https://id.twitch.tv/oauth2/token?client_
             'Authorization': "Bearer "+ access_token,
             'Content-Type': 'text/plain'
         },
-        data: 'fields name; where name = "'+ req.params.igdbTitle + '"*;'
+        data: 'fields name; where name = "'+ req.params.igdbTitle + '"*;  limit 5;'
       })
         .then(response => {
            res.send(response.data);
