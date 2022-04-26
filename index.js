@@ -10,7 +10,7 @@ import cors_proxy from 'cors-anywhere'
 import axios from 'axios';
 import requestIp from 'request-ip'
 import { networkInterfaces } from 'os'
-import './proxy.cjs'
+// import './proxy.cjs'
 
 
 
