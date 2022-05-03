@@ -95,6 +95,7 @@ const access_token = await axios.post('https://id.twitch.tv/oauth2/token?client_
 
 
   app.get('/igdb/:igdbTitle', (req, res) => {
+    const slug = req.params.igdbTitle;
     axios.post('https://id.twitch.tv/oauth2/token?client_id=jwz94hqz4avlwtjqyn7y11fuqbfln4&client_secret=ziazxnfp8v0nqr1qqsxugrlv6eofe2&grant_type=client_credentials')
     .then(function (response) {
       return axios({
@@ -105,10 +106,10 @@ const access_token = await axios.post('https://id.twitch.tv/oauth2/token?client_
             'Authorization': "Bearer "+ access_token,
             'Content-Type': 'text/plain'
         },
-        data: 'fields name; where name = "'+ req.params.igdbTitle + '"*;  limit 5;'
+        data: 'fields slug,name; where slug = "'+ slug + '"* & version_parent = null;  limit 5;'
       })
         .then(response => {
-           res.send(response.data.map(entry => entry.name.toLowerCase()));
+           res.send(response.data);
         })
         .catch(err => {
             console.error(err);
