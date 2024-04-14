@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import "dotenv/config";
-import { IGDBTokenResult } from "../models/igdb.models";
+import { IGDBGameResult, IGDBTokenResult } from "../models/igdb.models";
 
 
 const twitch = process.env.TWITCH_ID_DOMAIN || "";
@@ -8,7 +8,7 @@ const igdb = process.env.IGDB_DOMAIN || "";
 const id = process.env.IGDB_CLIENT_ID || "";
 const secret = process.env.IGDB_CLIENT_SECRET || "";
 
-export async function getIGDBToken() {
+export async function getIGDBToken(): Promise<IGDBTokenResult> {
     const headers = {
         "client_id": id,
         "client_secret": secret,
@@ -25,7 +25,7 @@ export async function getIGDBToken() {
     return token;
 };
 
-export async function getIGDBGamesByName(name: string, token: string) {
+export async function getIGDBGamesByName(name: string, token: string): Promise<IGDBGameResult[]> {
     const gameRequest = {
         method: 'POST',
         headers: {
@@ -36,6 +36,6 @@ export async function getIGDBGamesByName(name: string, token: string) {
         body: `fields name, slug; search "${name}"; where version_parent = null;  limit 5;`
     }
     const response = await fetch(`${igdb}v4/games/`, gameRequest);
-    const games = await response.json();
+    const games = await (response.json() as unknown as IGDBGameResult[]);
     return games;
 };

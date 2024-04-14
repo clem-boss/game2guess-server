@@ -1,4 +1,4 @@
-import cors from "cors";
+import bodyParser from "body-parser";
 import express, { Express, Response, response } from "express";
 import { getDocument } from "./services/prismic-document.service";
 import { getIGDBGamesByName, getIGDBToken } from "./services/igdb.service";
@@ -25,6 +25,7 @@ getDocument()
   });
 
 // app.use(cors({origin: process.env.ALLOWED_DOMAINS}));
+app.use(bodyParser.text())
 
 app.get("/", async (req, res) => {
   res.send("Hello from express !");
@@ -34,8 +35,8 @@ app.get("/document", async (req, res) => {
   res.send(gameDocument);
 })
 
-app.get("/igdb/:igdbTitle", (req, res) => {
-    const searchName = req.params.igdbTitle;
+app.get("/igdb", (req, res) => {
+    const searchName = req.body;
     getIGDBGamesByName(searchName, IGDBtoken).then(response => res.send(response));
 });
 
