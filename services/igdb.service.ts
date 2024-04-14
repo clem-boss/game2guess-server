@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import 'dotenv/config';
+import "dotenv/config";
 import { IGDBTokenResult } from "../models/igdb.models";
 
 
