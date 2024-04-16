@@ -5,6 +5,7 @@ import { getIGDBGamesByName, getIGDBToken } from "./services/igdb.service";
 import "dotenv/config";
 import { IGDBTokenResult } from "./models/igdb.models";
 import { Game2GuessDocument } from "./models/document.models";
+import cors from "cors";
 
 
 
@@ -24,7 +25,8 @@ getDocument()
       gameDocument = response;
   });
 
-// app.use(cors({origin: process.env.ALLOWED_DOMAINS}));
+app.use(cors());
+
 app.use(bodyParser.text())
 
 app.get("/", async (req, res) => {

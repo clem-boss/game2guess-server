@@ -5,7 +5,8 @@ export function mapPrismicResultToGameDocument(prismicResult: PrismicDocumentRes
     const title = encrypt(prismicResult.data.title[0].text);
     const images: string[] = [];
     for (let i=1; i<=4; i++) {
-        images.push(prismicResult.data[`img${i}`as keyof object]);
+        const image = Object.values(prismicResult.data)[i] as unknown as {url: string};
+        images.push(image.url);
     }
     return {title, images};
 }

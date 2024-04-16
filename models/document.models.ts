@@ -12,9 +12,17 @@ export interface PrismicDocumentResult {
                 text: string;
             }
         ],
-        img1: string;
-        img2: string;
-        img3: string;
-        img4: string;
+        img1: {
+            src: string;
+        };
+        img2: {
+            src: string;
+        };
+        img3: {
+            src: string;
+        };
+        img4: {
+            src: string;
+        };
     }
 }
