@@ -1,5 +1,7 @@
 # How to use game2guess server
 
+```npm i && npm start```
+
 Get document from **Prismic** :
 
     GET /document
