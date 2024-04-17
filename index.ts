@@ -1,10 +1,10 @@
 import bodyParser from "body-parser";
-import express, { Express, Response, response } from "express";
-import { getDocument } from "./services/prismic-document.service";
-import { getIGDBGamesByName, getIGDBToken } from "./services/igdb.service";
+import express, { Express } from "express";
+import { getDocument } from "./services/prismic-document.service.ts";
+import { getIGDBGamesByName, getIGDBToken } from "./services/igdb.service.ts";
 import "dotenv/config";
-import { IGDBTokenResult } from "./models/igdb.models";
-import { Game2GuessDocument } from "./models/document.models";
+import { IGDBTokenResult } from "./models/igdb.models.ts";
+import { Game2GuessDocument } from "./models/document.models.ts";
 import cors from "cors";
 
 

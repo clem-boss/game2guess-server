@@ -1,4 +1,4 @@
-import { CryptoValue } from "../models/crypto.models";
+import { CryptoValue } from "../models/crypto.models.ts";
 
 export function mapBufferToCryptoValue(randomBuffer: Buffer, dataBuffer: Buffer): CryptoValue {
     return {

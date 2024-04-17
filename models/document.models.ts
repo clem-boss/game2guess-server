@@ -1,4 +1,4 @@
-import { CryptoValue } from "./crypto.models";
+import { CryptoValue } from "./crypto.models.ts";
 
 export interface Game2GuessDocument {
     title: CryptoValue;

@@ -1,5 +1,5 @@
-import { Game2GuessDocument, PrismicDocumentResult } from "../models/document.models";
-import { encrypt } from "../services/encryption.service";
+import { Game2GuessDocument, PrismicDocumentResult } from "../models/document.models.ts";
+import { encrypt } from "../services/encryption.service.ts";
 
 export function mapPrismicResultToGameDocument(prismicResult: PrismicDocumentResult): Game2GuessDocument {
     const title = encrypt(prismicResult.data.title[0].text);

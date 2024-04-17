@@ -1,6 +1,6 @@
 import { createCipheriv, randomBytes } from "crypto";
-import { CryptoValue } from "../models/crypto.models";
-import { mapBufferToCryptoValue } from "../mappers/crypto.mapper";
+import { CryptoValue } from "../models/crypto.models.ts";
+import { mapBufferToCryptoValue } from "../mappers/crypto.mapper.ts";
 import "dotenv/config";
 
 const algorithm = "aes-256-ctr";
