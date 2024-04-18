@@ -1,5 +1,7 @@
 # How to use game2guess server
 
+First, ask the author for the .env file variables.
+
 ```npm i && npm start```
 
 Get document from **Prismic** :
