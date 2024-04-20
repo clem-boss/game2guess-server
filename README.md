@@ -13,7 +13,7 @@ Get document from **Prismic** :
 
 Get suggestions from **IGDB** :
 
-    GET /igdb
+    POST /igdb
     Host: localhost:3000
     Content-Type: text/plain
     

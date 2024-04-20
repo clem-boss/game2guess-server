@@ -37,7 +37,7 @@ app.get("/document", async (req, res) => {
   res.send(gameDocument);
 })
 
-app.get("/igdb", (req, res) => {
+app.post("/igdb", (req, res) => {
     const searchName = req.body;
     getIGDBGamesByName(searchName, IGDBtoken).then(response => res.send(response));
 });
