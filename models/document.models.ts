@@ -1,7 +1,7 @@
 import { CryptoValue } from "./crypto.models.ts";
 
 export interface Game2GuessDocument {
-    title: CryptoValue;
+    title: string;
     images: string[];
 };
 
